@@ -1,0 +1,46 @@
+<div class="container">
+  <h1 class="pt-3">Listado de Personas</h1>
+  <div
+    *ngIf="personsList == null || personsList.length === 0; else table"
+    class="alert alert-warning text-center"
+  >
+    No hay registros que mostrar
+  </div>
+
+  <ng-template #table>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Correo electronico</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of personsList">
+          <td>{{ person.id }}</td>
+          <td>{{ person.name }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.email }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deletePerson(person.id!)"
+            >
+              Eliminar
+            </button>
+            <span class="p-1"></span>
+            <button type="button" class="btn btn-primary" [routerLink]="['/persons/edit', person.id]">Actualizar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page">
+      <ul class="pagination"></ul>
+    </nav>
+  </ng-template>
+</div>
+
