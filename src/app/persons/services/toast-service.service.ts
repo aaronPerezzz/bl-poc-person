@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ToastType } from '../utils/enums/toastType';
 
+/**
+ * @author Aaron Pérez
+ * @since 29/12/2024
+ */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +14,12 @@ export class ToastServiceService {
 
   constructor(private toastService: ToastrService) { }
 
+  /**
+   * Muestra un mensaje emergente
+   * @param title
+   * @param message
+   * @param toastType
+   */
   public message(title: string, message: string, toastType: ToastType): void {
     switch(toastType){
       case ToastType.INFO:

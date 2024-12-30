@@ -9,6 +9,11 @@ import { Constants } from '../../utils/constants';
   selector: 'app-list-persons-page',
   templateUrl: './list-persons-page.component.html'
 })
+
+/**
+ * @author Aaron Pérez
+ * @since 29/12/2024
+ */
 export class ListPersonsPageComponent implements OnInit{
 
   public personsList: Person[] = [];
@@ -21,16 +26,33 @@ export class ListPersonsPageComponent implements OnInit{
     this.getAllpersons();
   }
 
-  getAllpersons(){
-    this.personService.getAllPersons(1, 10).subscribe(response => this.personsList = response?.response!)
+  /**
+   * Obtiene las personas por paginación
+   * @param page
+   * @param items
+   */
+  getAllpersons(page: number = Constants.DEFAULT_PAGE, items: number = Constants.DEFAULT_ITEMS){
+    this.personService.getAllPersons(page, items).subscribe(response => this.personsList = response?.response!)
   }
 
-  deletePerson(id: number){
+  /**
+   * Eliminación de persona por id
+   * @param id
+   */
+  deletePerson(id: number): void{
     this.personService.deletePersonById(id).subscribe(response => {
       this.toastService.message(Constants.LABEL_SUCCESS, "La persona se elimino con éxito", ToastType.SUCCESS);
       this.getAllpersons();
     }, (error) => {
       this.toastService.message(Constants.LABEL_ERROR, error.message, ToastType.ERROR);
     });
+  }
+
+  /**
+   * Método encargado de obtener los datos para paginación
+   * @param numPage
+   */
+  pagination(numPage: number): void{
+    this.getAllpersons(numPage);
   }
 }

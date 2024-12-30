@@ -7,17 +7,19 @@
 
 export class Constants {
 
-  public static EMPTY_STRING = "";
-  public static URL_LIST = "/persons/list";
-  public static LABEL_ERROR = "Error";
-  public static LABEL_UPDATE = "Actualización";
-  public static LABEL_SAVE = "Guardado";
-  public static LABEL_SUCCESS = "Correcto";
+  public static readonly EMPTY_STRING = "";
+  public static readonly URL_LIST = "/persons/list";
+  public static readonly LABEL_ERROR = "Error";
+  public static readonly LABEL_UPDATE = "Actualización";
+  public static readonly LABEL_SAVE = "Guardado";
+  public static readonly LABEL_SUCCESS = "Correcto";
 
+  public static readonly POSITION_TOAST = "toast-bottom-right";
+  public static readonly NUM0 = 0;
+  public static readonly SHOW_TIME = 3000;
+  public static readonly TRUE = true;
+  public static readonly FALSE = false;
 
-  public static POSITION_TOAST = "toast-bottom-right";
-  public static NUM0 = 0;
-  public static SHOW_TIME = 3000;
-  public static TRUE = true;
-  public static FALSE = false;
+  public static readonly DEFAULT_PAGE = 1;
+  public static readonly DEFAULT_ITEMS = 10;
 }

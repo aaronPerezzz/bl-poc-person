@@ -38,8 +38,14 @@
         </tr>
       </tbody>
     </table>
-    <nav aria-label="Page">
-      <ul class="pagination"></ul>
+    <nav aria-label="Page navigation example">
+      <div class="d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" (click)="pagination(1)">1</a></li>
+          <li class="page-item"><a class="page-link" (click)="pagination(2)">2</a></li>
+          <li class="page-item"><a class="page-link" (click)="pagination(3)">3</a></li>
+        </ul>
+      </div>
     </nav>
   </ng-template>
 </div>

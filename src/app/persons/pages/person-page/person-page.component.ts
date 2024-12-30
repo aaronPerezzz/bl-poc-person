@@ -13,6 +13,11 @@ import { formatDate } from '@angular/common';
   selector: 'app-person-page',
   templateUrl: './person-page.component.html'
 })
+
+/**
+ * @author Aaron Pérez
+ * @since 29/12/2024
+ */
 export class PersonPageComponent implements OnInit {
 
   private fb: FormBuilder = new FormBuilder();
@@ -27,9 +32,6 @@ export class PersonPageComponent implements OnInit {
     maritalStatus: ['', [Validators.required]]
   });
 
-  /**
-   *
-   */
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonsServiceService,
@@ -37,6 +39,9 @@ export class PersonPageComponent implements OnInit {
     private toastService: ToastServiceService
   ) { }
 
+  /**
+   * Obtiene una instacia de la persona
+   */
   get currentPerson(): Person {
     const person = this.personForm.value as Person;
     return person;
@@ -54,6 +59,11 @@ export class PersonPageComponent implements OnInit {
       })
   }
 
+  /**
+   * En caso de tener id el registro se actualiza información
+   * en caso contrario se agrega nuevo registro
+   * @returns
+   */
   onSubmit(): void {
     if (this.personForm.invalid) return;
 
@@ -76,6 +86,11 @@ export class PersonPageComponent implements OnInit {
     })
   }
 
+  /**
+   * Valida si un campo es correcto
+   * @param field
+   * @returns
+   */
   isValidField(field: string): boolean | null {
     return this.personForm.controls[field].errors && this.personForm.controls[field].touched
   }
