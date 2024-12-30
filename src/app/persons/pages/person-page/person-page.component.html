@@ -15,6 +15,9 @@
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('name')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
 
       <div class="mb-3 row">
@@ -26,6 +29,9 @@
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('lastName')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
 
       <div class="mb-3 row">
@@ -37,6 +43,9 @@
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('email')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
 
       <div class="mb-3 row">
@@ -48,17 +57,23 @@
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('phone')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
 
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Cumpleaños</label>
         <div class="col-sm-5">
           <input
-            type="text"
+            type="date"
             formControlName="birthDay"
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('birthDay')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
 
       <div class="mb-3 row">
@@ -70,6 +85,9 @@
             class="form-control"
           />
         </div>
+        <span *ngIf="isValidField('maritalStatus')" class="form-text text-danger">
+          Revisar información escrita
+        </span>
       </div>
     </form>
   </div>

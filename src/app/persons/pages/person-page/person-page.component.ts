@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonsServiceService } from '../../services/persons.service.service';
 import { switchMap } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Person } from '../../interfaces/person.interface';
 import { ToastServiceService } from '../../services/toast-service.service';
 import { ToastType } from '../../utils/enums/toastType';
 import { Constants } from '../../utils/constants';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-person-page',
@@ -14,14 +15,16 @@ import { Constants } from '../../utils/constants';
 })
 export class PersonPageComponent implements OnInit {
 
-  public personForm = new FormGroup({
-    id: new FormControl(),
-    name: new FormControl('', {validators: [Validators.required]}),
-    lastName: new FormControl('', {validators: [Validators.required]}),
-    email: new FormControl('', {validators:[Validators.required, Validators.email]}),
-    phone: new FormControl('', {validators:[Validators.required, Validators.maxLength(10)]}),
-    birthDay: new FormControl(),
-    maritalStatus: new FormControl('', {validators: [Validators.required]})
+  private fb: FormBuilder = new FormBuilder();
+
+  public personForm: FormGroup = this.fb.group({
+    id: [0],
+    name: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required, Validators.maxLength(10)]],
+    birthDay: [new Date(), [Validators.required]],
+    maritalStatus: ['', [Validators.required]]
   });
 
   /**
@@ -32,9 +35,9 @@ export class PersonPageComponent implements OnInit {
     private personService: PersonsServiceService,
     private router: Router,
     private toastService: ToastServiceService
-  ) {}
+  ) { }
 
-  get currentPerson(): Person{
+  get currentPerson(): Person {
     const person = this.personForm.value as Person;
     return person;
   }
@@ -51,27 +54,30 @@ export class PersonPageComponent implements OnInit {
       })
   }
 
-  onSubmit(): void{
-    if(this.personForm.invalid) return;
+  onSubmit(): void {
+    if (this.personForm.invalid) return;
 
-    if(this.currentPerson.id){
+    if (this.currentPerson.id) {
       this.personService.updatePersonById(this.currentPerson)
-      .subscribe(person => {
-        this.toastService.message(Constants.LABEL_UPDATE,"Información actualizada con éxito", ToastType.SUCCESS);
-        this.router.navigate([Constants.URL_LIST])
-      }, (error) => {
-        this.toastService.message(Constants.LABEL_ERROR,"Error al actualizar la información", ToastType.ERROR);
-      });
+        .subscribe(person => {
+          this.toastService.message(Constants.LABEL_UPDATE, "Información actualizada con éxito", ToastType.SUCCESS);
+          this.router.navigate([Constants.URL_LIST])
+        }, (error) => {
+          this.toastService.message(Constants.LABEL_ERROR, "Error al actualizar la información", ToastType.ERROR);
+        });
       return;
     }
 
     this.personService.savePerson(this.currentPerson).subscribe(person => {
-      this.toastService.message(Constants.LABEL_SAVE,"Información guardad con éxito", ToastType.SUCCESS);
+      this.toastService.message(Constants.LABEL_SAVE, "Información guardad con éxito", ToastType.SUCCESS);
       this.router.navigate([Constants.URL_LIST])
     }, (error) => {
-      this.toastService.message(Constants.LABEL_ERROR,"Error al guardar la información", ToastType.ERROR);
+      this.toastService.message(Constants.LABEL_ERROR, "Error al guardar la información", ToastType.ERROR);
     })
   }
 
+  isValidField(field: string): boolean | null {
+    return this.personForm.controls[field].errors && this.personForm.controls[field].touched
+  }
 
 }
